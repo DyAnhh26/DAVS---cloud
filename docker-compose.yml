@@ -1,0 +1,27 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      args:
+        APP_VERSION: ${APP_VERSION:-v1}
+    environment:
+      APP_VERSION: ${APP_VERSION:-v1}
+    ports:
+      - "8000:8000"
+    networks:
+      davs:
+        aliases:
+          - davs-backend
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        APP_VERSION: ${APP_VERSION:-v1}
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - davs
+networks:
+  davs:
