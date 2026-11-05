@@ -26,6 +26,14 @@ def root():
 @app.get("/health")
 def health():
     return {"status": "ok", "version": APP_VERSION}
+@app.get("/config")
+def get_config():
+    return {
+        "supported_formats": list(ALLOWED_EXTENSIONS),
+        "max_upload_mb": MAX_UPLOAD_BYTES // (1024 * 1024),
+        "max_rows": MAX_ROWS,
+        "version": APP_VERSION
+    }
 
 
 async def read_dataframe(file: UploadFile) -> pd.DataFrame:
